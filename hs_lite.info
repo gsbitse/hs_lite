@@ -1,0 +1,7 @@
+name = Hierarchy Select Lite
+core = 7.x
+package = Form Elements
+version = 7.x-1.0
+project = hs_lite
+
+

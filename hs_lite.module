@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Code for Hierarchy Select Lite module.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function hs_lite_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {  
+  $instance = $form['#instance'];  
+	if ($instance['widget']['type'] == 'options_select') {
+		$form['instance']['settings']['use_hierarchy_select_lite'] = array(
+		  '#type' => 'checkbox',
+		  '#title' => t('Use hierarchy select lite widget.'),
+		  '#description' => t("Description stuff goes here..."),
+		  '#default_value' => !empty($instance['settings']['use_hierarchy_select_lite']) ? TRUE : FALSE,
+		  // Display just below the 'required' checkbox.
+		  '#weight' => $form['instance']['required']['#weight'] + .1,
+		);			
+		//array_unshift($form['#submit'], 'hs_lite_form_field_ui_field_edit_form_submit');
+	}		
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function hs_lite_field_widget_form_alter(&$element, &$form_state, $context) {
+  $field = $context['field'];
+  $instance = $context['instance'];
+  $settings = $instance['settings'];
+	if ($instance['widget']['type'] == 'options_select' && !empty($settings['use_hierarchy_select_lite'])) {
+  	$element['#attributes']['class'][] = 'hs-lite-widget';
+  	$element['#after_build'][] = 'hs_lite_add_resources';
+	}  
+}
+
+/**
+ * hs_lite_add_resources()
+ * 
+ * Adds the js needed for replace the select field with
+ * our hierarchy select lite field.
+ */
+function hs_lite_add_resources($form, &$form_state) {
+  $path = drupal_get_path('module', 'hs_lite');
+  $form['#attached']['js'][] = "$path/js/hs_lite.js";
+  return $form;
+}
+
