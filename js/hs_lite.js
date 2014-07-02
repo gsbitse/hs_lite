@@ -4,17 +4,15 @@ Drupal.behaviors.gsb_feature_idea_story_ct = {
  
   attach: function (context, settings) {
 
-    // get the name of the field we will be replacing
-
-    // testing testing testing
-    //var selectFieldName = "field_key_taxonomy"; 
-    //var selectFieldName = "field_test2";
-    //var selectFieldName = settings.gsb_feature_idea_story_ct.replace_field; 
-    var selectFieldName = settings.gsb_feature_idea_story_ct.replace_field; 
-
     // create the hierarchy info using the data from the 
     // select field being replaced... adding in cloned field at each 
     // level in the heirarchy
+
+    var selectFieldName = $('.hs-lite-widget').attr('name');
+    var pos = selectFieldName.indexOf('[');
+    if (pos != -1) {
+      selectFieldName = selectFieldName.substr(0, pos);
+    }
 
     var hi = new Drupal.gsb_feature_idea_story_ct.HierarchyInfo();
     hi.addCloneLevelFields(selectFieldName);	
@@ -45,7 +43,7 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
   this.currentSelectedValues = [];
 
   // naming used for the cloned select fields
-  this.LEVELNAME = 'fake-level';
+  this.LEVELNAME = 'hs-lite-level';
 
   // selectField: the select field being replaced
   this.selectField = null;
@@ -737,10 +735,10 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
   this.addAddButton = function(element) {
     
     element.after(
-      $('<input type="button" value="Add" class="fake-add-button form-submit" id="fake-add-button">')
+      $('<input type="button" value="Add" class="hs-lite-add-button form-submit" id="hs-lite-add-button">')
     );
 
-    self.addButton = $("#fake-add-button");
+    self.addButton = $("#hs-lite-add-button");
 
     // setup a click handler for the new add button
     self.addButton.click(function() {
@@ -831,10 +829,10 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
 
     self.addButton.after($(
       '<div class="dropbox">' + 
-        '<table id="fake-selected-table">' + 
+        '<table id="hs-lite-selected-table">' + 
           '<caption class="dropbox-title">All selections</caption>' + 
           '<tbody>' + 
-            '<tr id="fake-level-is-empty">' +
+            '<tr id="hs-lite-level-is-empty">' +
               '<td>Nothing has been selected.</td>' + 
             '</tr>' + 
           '</tbody>' + 
@@ -851,8 +849,8 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
 
     console.log('in addNoNothinRow');
 
-    $('#fake-selected-table tr:last').after($(
-      '<tr id="fake-level-is-empty">' +
+    $('#hs-lite-selected-table tr:last').after($(
+      '<tr id="hs-lite-level-is-empty">' +
         '<td>Nothing has been selected.</td>' + 
       '</tr>' 
     ));    
@@ -871,22 +869,22 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
     }
 
     var oddeven = 'odd';
-    if ($('#fake-selected-table tr:last').hasClass('odd')) {
+    if ($('#hs-lite-selected-table tr:last').hasClass('odd')) {
       oddeven = 'even';
     }
 
     var dashedIndexList = indexList.join('-');
     var arrowedTextList = selectedTextList.join(' > ');
 
-    $('#fake-selected-table tr:last').after($(
-      '<tr class="' + oddeven + '" id="fake-level-remove-tr-' + dashedIndexList + '">' + 
-        '<td><span class="fake-level-item" >' + arrowedTextList + '</span></td>' + 
-        '<td class="fake-level-remove"><span><a href="#" id="fake-level-remove-link-' + dashedIndexList + '" data-index="' + dashedIndexList + '">Remove</a></span></td>' + 
+    $('#hs-lite-selected-table tr:last').after($(
+      '<tr class="' + oddeven + '" id="hs-lite-level-remove-tr-' + dashedIndexList + '">' + 
+        '<td><span class="hs-lite-level-item" >' + arrowedTextList + '</span></td>' + 
+        '<td class="hs-lite-level-remove"><span><a href="#" id="hs-lite-level-remove-link-' + dashedIndexList + '" data-index="' + dashedIndexList + '">Remove</a></span></td>' + 
       '</tr>'
     ));
 
     // setup a click handler for the new remove link
-    $('#fake-level-remove-link-'+dashedIndexList).click(function(event) {
+    $('#hs-lite-level-remove-link-'+dashedIndexList).click(function(event) {
       
       // get the list of indexes related to this selected row
 
@@ -919,14 +917,14 @@ Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
 
       // remove this selected table row
       
-      $('#fake-level-remove-tr-'+dashedIndexList).remove();
+      $('#hs-lite-level-remove-tr-'+dashedIndexList).remove();
 
       event.stopPropagation();
       event.preventDefault();
     
     });    
 
-    $('#fake-level-is-empty').remove();
+    $('#hs-lite-level-is-empty').remove();
 
   };  // end of addSelectedTableRow   
 
