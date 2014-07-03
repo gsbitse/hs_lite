@@ -18,7 +18,6 @@ function hs_lite_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form
 		  // Display just below the 'required' checkbox.
 		  '#weight' => $form['instance']['required']['#weight'] + .1,
 		);			
-		//array_unshift($form['#submit'], 'hs_lite_form_field_ui_field_edit_form_submit');
 	}		
 }
 
@@ -38,8 +37,7 @@ function hs_lite_field_widget_form_alter(&$element, &$form_state, $context) {
 /**
  * hs_lite_add_resources()
  * 
- * Adds the js needed for replace the select field with
- * our hierarchy select lite field.
+ * Adds the js needed for hs_lite select field.
  */
 function hs_lite_add_resources($form, &$form_state) {
   $path = drupal_get_path('module', 'hs_lite');

@@ -1,6 +1,6 @@
 (function ($) {
 
-Drupal.behaviors.gsb_feature_idea_story_ct = {
+Drupal.behaviors.hs_lite = {
  
   attach: function (context, settings) {
 
@@ -14,7 +14,7 @@ Drupal.behaviors.gsb_feature_idea_story_ct = {
       selectFieldName = selectFieldName.substr(0, pos);
     }
 
-    var hi = new Drupal.gsb_feature_idea_story_ct.HierarchyInfo();
+    var hi = new Drupal.hs_lite.HierarchyInfo();
     hi.addCloneLevelFields(selectFieldName);	
 
     // setup a submit handler to remove these cloned select fields 
@@ -29,9 +29,9 @@ Drupal.behaviors.gsb_feature_idea_story_ct = {
 
 };  
 
-Drupal.gsb_feature_idea_story_ct = Drupal.gsb_feature_idea_story_ct || {};
+Drupal.hs_lite = Drupal.hs_lite || {};
 
-Drupal.gsb_feature_idea_story_ct.HierarchyInfo = function () {
+Drupal.hs_lite.HierarchyInfo = function () {
 
   /**
    * Properties 
